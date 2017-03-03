@@ -1,8 +1,9 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from feed import Feed
+from settings import URL
 
 sched = BlockingScheduler()
-feed = Feed("http://dgu.ru/index.php?option=com_ninjarsssyndicator&feed_id=2&format=raw")
+feed = Feed(URL)
 
 
 @sched.scheduled_job('interval', seconds=1)
