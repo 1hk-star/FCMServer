@@ -12,7 +12,7 @@ class Feed:
 
     LAST_CHECKED = datetime.datetime(1017, 3, 1, 13, 8, 45)
 
-    def get_events(self):
+    def get_entries(self):
         d = easydict.EasyDict(
             feedparser.parse(self.url)
         )
