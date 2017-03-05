@@ -31,21 +31,23 @@ class FCMPush:
         message_body = url
         result = self.client.notify_multiple_devices(registration_ids=self.user_ids, message_title=message_title,
                                                      message_body=message_body)
-        print(result)
+        if not result[0]['success']:
+            print(result)
 
     def send_messages(self, entries):
         with open(self.user_keys, 'r') as f:
             self.user_ids = [i.strip() for i in f.readlines()]
         for entry in entries:
             self.send_msg(entry.title, entry.link)
+        print("Pushed")
 
-pusher = None
+
+pusher = FCMPush()
 
 sched = BlockingScheduler()
 feed = Feed(URL)
 
 
-@sched.scheduled_job('interval', seconds=1)
 def getandpush():
     entries = feed.get_entries()
     pusher.send_messages(entries)

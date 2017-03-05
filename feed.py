@@ -11,7 +11,7 @@ class Feed:
     def __strtotime(self, s):
         return datetime.datetime.strptime(s, "%a, %d %b %Y %H:%M:%S GMT")
 
-    LAST_CHECKED = datetime.datetime(1017, 3, 1, 13, 8, 45)
+    LAST_CHECKED = datetime.datetime(2017, 3, 1, 13, 8, 45)
 
     def get_entries(self):
         d = easydict.EasyDict(
