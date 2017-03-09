@@ -5,3 +5,4 @@ pyfcm==1.2.4
 python-pushover
 tornado
 flask
+gunicorn
