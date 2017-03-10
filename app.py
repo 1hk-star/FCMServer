@@ -20,7 +20,7 @@ def run(port=8080):
     http_server = tornado.httpserver.HTTPServer(
         tornado.wsgi.WSGIContainer(app)
     )
-    http_server.listen(8080, "0.0.0.0")
+    http_server.listen(port, "0.0.0.0")
     print("Tornado server starting on port {}".format(port))
     tornado.ioloop.IOLoop.instance().start()
 
