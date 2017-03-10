@@ -1,3 +1,4 @@
+import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 from pushover import Client
 
@@ -5,6 +6,8 @@ from feed import Feed
 from settings import *
 
 from pyfcm import FCMNotification
+
+logger = logging.getLogger()
 
 
 class PushOverPush:
@@ -39,7 +42,7 @@ class FCMPush:
             self.user_ids = [i.strip() for i in f.readlines()]
         for entry in entries:
             self.send_msg(entry.title, entry.link)
-        print("Pushed")
+        logger.debug("Pushed {n} messages".format(n=len(entries)))
 
 
 pusher = FCMPush()
