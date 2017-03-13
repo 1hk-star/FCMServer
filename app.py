@@ -9,7 +9,7 @@ from flask import jsonify, request
 from appInit import *
 from push import FCMPush
 
-logger = logging.getLogger()
+
 c = FCMPush()
 
 
@@ -22,10 +22,11 @@ def save_key(key):
     return 'Key saved'
 
 
-@app.route("/push")
+@app.route("/push", methods=["GET", "POST"])
 def push():
     title = request.args.get('title')
     url = request.args.get('url')
+    logger.info("{} {}".format(title, url))
     res = c.send_msg(title, url)
     return jsonify(res)
 
@@ -42,10 +43,11 @@ def run(port=8080):
 
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.DEBUG)
-    logging.getLogger("werkzeug").setLevel(logging.ERROR)
+    #logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
     logging.getLogger("apscheduler.scheduler").setLevel(logging.ERROR)
-    logging.getLogger("tornado").setLevel(logging.ERROR)
+    #logging.getLogger("tornado").setLevel(logging.ERROR)
+    logging.getLogger("urllib3").setLevel(logging.ERROR)
 
     parser = argparse.ArgumentParser(description='Run a task')
     parser.add_argument('--port', dest='port',

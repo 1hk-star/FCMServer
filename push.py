@@ -34,8 +34,8 @@ class FCMPush:
         message_body = url
         result = self.client.notify_multiple_devices(registration_ids=self.user_ids, message_title=message_title,
                                                      message_body=message_body)
-        if not result[0]['success']:
-            print(result)
+        #if not result[0]['success']:
+        print(result)
         return result
 
     def send_messages(self, entries):
