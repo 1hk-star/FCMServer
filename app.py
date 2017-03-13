@@ -4,10 +4,13 @@ import logging
 import tornado.wsgi
 import tornado.httpserver
 import tornado.ioloop
+from flask import jsonify, request
 
 from appInit import *
+from push import FCMPush
 
 logger = logging.getLogger()
+c = FCMPush()
 
 
 @app.route("/k/<key>")
@@ -17,6 +20,14 @@ def save_key(key):
     f.write(key + "\n")
     f.close()
     return 'Key saved'
+
+
+@app.route("/push")
+def push():
+    title = request.args.get('title')
+    url = request.args.get('url')
+    res = c.send_msg(title, url)
+    return jsonify(res)
 
 
 def run(port=8080):

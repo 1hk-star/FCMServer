@@ -36,6 +36,7 @@ class FCMPush:
                                                      message_body=message_body)
         if not result[0]['success']:
             print(result)
+        return result
 
     def send_messages(self, entries):
         with open(self.user_keys, 'r') as f:
