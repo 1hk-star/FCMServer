@@ -41,8 +41,7 @@ def run(port=8080):
 
 
 if __name__ == '__main__':
-    logging.getLogger().setLevel(logging.INFO)
-    # Избавляемся от лишнего вывода в логах
+    logging.getLogger().setLevel(logging.DEBUG)
     logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
     logging.getLogger("apscheduler.scheduler").setLevel(logging.ERROR)
