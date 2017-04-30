@@ -1,3 +1,4 @@
+#coding:utf-8
 import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 from pushover import Client
