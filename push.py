@@ -2,7 +2,7 @@ import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 from pushover import Client
 
-from feed import Feed
+from feed import RssFeed, MFeed
 from settings import *
 
 from pyfcm import FCMNotification
@@ -34,27 +34,28 @@ class FCMPush:
         message_body = url
         result = self.client.notify_multiple_devices(registration_ids=self.user_ids, message_title=message_title,
                                                      message_body=message_body)
-        #if not result[0]['success']:
-        print(result)
+        if not result[0]['success']:
+            print(result)
         return result
 
-    def send_messages(self, entries):
+    def send_messages(self, entries,feedName=""):
         with open(self.user_keys, 'r') as f:
             self.user_ids = [i.strip() for i in f.readlines()]
         for entry in entries:
-            self.send_msg(entry.title, entry.link)
+            self.send_msg(feedName+" "+entry.title, entry.link)
         logger.debug("Pushed {n} messages".format(n=len(entries)))
 
 
 pusher = FCMPush()
 
 sched = BlockingScheduler()
-feed = Feed(URL)
+feed = RssFeed(URL)
+mfeed = MFeed()
 
 
 def getandpush():
-    entries = feed.get_entries()
-    pusher.send_messages(entries)
+    pusher.send_messages(feed.get_entries(), feedName="ДГУ")
+    pusher.send_messages(mfeed.get_entries(), feedName="ФМиКН")
 
 
 if __name__ == '__main__':
